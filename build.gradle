@@ -1,0 +1,101 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.github.ben-manes.versions' version '0.33.0'
+    id 'org.unbroken-dome.test-sets' version '4.0.0'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+logger.quiet "Running Java version: " + System.properties['java.vm.vendor'] + " " + System.properties['java.vm.name'] + " " + System.properties['java.version']
+logger.quiet "Running Gradle version: $gradle.gradleVersion"
+
+group 'org.vincenzolabs'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '15' // FIXME
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+testSets {
+    componentTest
+    integrationTest
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.7.0'
+    assertjVersion = '3.19.0'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    //componentTestCompile sourceSets.test.output
+    //integrationTestCompile sourceSets.test.output
+}
+
+/*
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'org.vincenzolabs'
+            artifactId = 'paymaya-java-spring-sdk'
+            version = '1.0.0' // FIXME
+            artifact sourcesJar { classifier "sources" }
+            // FIXME pom, scm
+        }
+    }
+    repositories {
+        maven {
+            url '' // FIXME
+            credentials {
+                username = System.getenv('publish-user-name')
+                password = System.getenv('publish-user-password')
+            }
+        }
+    }
+}
+*/
+
+dependencyUpdates {
+    revision = 'release'
+    gradleReleaseChannel = 'current'
+    resolutionStrategy {
+        componentSelection { rules ->
+            rules.all { ComponentSelection selection ->
+                def version = selection.candidate.version.toLowerCase()
+                if (version.contains('alpha') || version.contains('beta')
+                        || version.contains('snapshot') || version.contains('rc')
+                        || version ==~ '[0-9]+\\.[0-9]+\\.[0-9]+(?:-b|.m|-M)[0-9]+(\\.)?[0-9]*') {
+                    selection.reject('Not a release')
+                }
+            }
+        }
+    }
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+wrapper {
+    gradleVersion = '7.0.2'
+}
