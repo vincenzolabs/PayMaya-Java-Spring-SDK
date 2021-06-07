@@ -28,7 +28,7 @@ import org.springframework.http.HttpStatus;
 /**
  * The base API exception.
  *
- * @author Rey Vincent Babilonia
+ * @author <a href="mailto:rvbabilonia@gmail.com">Rey Vincent Babilonia</a>
  */
 @Getter
 @ToString
