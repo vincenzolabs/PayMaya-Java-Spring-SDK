@@ -331,7 +331,7 @@ class PayMayaV1ClientIntegrationTest {
                 .block();
 
         assertThat(responses).isNotNull();
-        assertThat(responses).hasSize(36);
+        assertThat(responses).hasSizeGreaterThanOrEqualTo(43); // as of 2021-06-10
     }
 
     @Test

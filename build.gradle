@@ -3,13 +3,17 @@ plugins {
     id 'org.unbroken-dome.test-sets' version '4.0.0'
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 logger.quiet "Running Java version: " + System.properties['java.vm.vendor'] + " " + System.properties['java.vm.name'] + " " + System.properties['java.version']
 logger.quiet "Running Gradle version: $gradle.gradleVersion"
 
 group 'org.vincenzolabs'
-version '1.0-SNAPSHOT'
+def onGitHubWorkflow = System.getenv("GITHUB_RUN_NUMBER") != null
+project.ext.set("buildNumber", onGitHubWorkflow ? System.getenv("GITHUB_REF") : "1.0-SNAPSHOT")
+version = project.ext.buildNumber
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = '16'
 
 configurations {
@@ -49,29 +53,74 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertjVersion"
 }
 
-/*
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            groupId = 'org.vincenzolabs'
-            artifactId = 'paymaya-java-spring-sdk'
-            version = '1.0.0' // FIXME
-            artifact sourcesJar { classifier "sources" }
-            // FIXME pom, scm
-        }
-    }
+task javadocJar(type: Jar) {
+    archiveClassifier.set('javadoc')
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    def signingKey = System.getenv("SIGNING_KEY")
+    def signingPassword = System.getenv("SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+    sign configurations.archives
+}
+
+uploadArchives {
     repositories {
-        maven {
-            url '' // FIXME
-            credentials {
-                username = System.getenv('publish-user-name')
-                password = System.getenv('publish-user-password')
+        mavenDeployer {
+            def ossrhUsername = System.getenv('OSSRH_USERNAME')
+            def ossrhPassword = System.getenv('OSSRH_PASSWORD')
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'PayMaya-Java-Spring-SDK'
+                packaging 'jar'
+                description "PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5."
+                url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
+
+                scm {
+                    connection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    developerConnection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'rvbabilonia'
+                        name 'Rey Vincent Babilonia'
+                        email 'rvbabilonia@gmail.com'
+                    }
+                }
             }
         }
     }
 }
-*/
 
 dependencyUpdates {
     revision = 'release'
