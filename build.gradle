@@ -10,7 +10,7 @@ logger.quiet "Running Gradle version: $gradle.gradleVersion"
 
 group 'org.vincenzolabs'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '16'
 
 configurations {
     compileOnly {
