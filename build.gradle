@@ -53,6 +53,7 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertjVersion"
 }
 
+/*
 task javadocJar(type: Jar) {
     archiveClassifier.set('javadoc')
     from javadoc
@@ -74,42 +75,52 @@ signing {
     required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
     sign configurations.archives
 }
+ */
 
-uploadArchives {
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
     repositories {
-        mavenDeployer {
-            def ossrhUsername = System.getenv('OSSRH_USERNAME')
-            def ossrhPassword = System.getenv('OSSRH_PASSWORD')
-
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+        maven {
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials {
+                username = System.getenv('OSSRH_USERNAME')
+                password = System.getenv('OSSRH_PASSWORD')
             }
-
-            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId 'org.vincenzolabs'
+            artifactId 'paymaya-java-spring-sdk'
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
             }
-
-            pom.project {
+            pom {
                 name 'PayMaya-Java-Spring-SDK'
                 packaging 'jar'
                 description "PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5."
                 url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
-
                 scm {
                     connection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
                     developerConnection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
                     url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
                 }
-
                 licenses {
                     license {
                         name 'MIT License'
                         url 'https://opensource.org/licenses/MIT'
                     }
                 }
-
                 developers {
                     developer {
                         id 'rvbabilonia'
@@ -119,6 +130,16 @@ uploadArchives {
                 }
             }
         }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
 

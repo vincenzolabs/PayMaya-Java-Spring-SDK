@@ -1,5 +1,5 @@
 # PayMaya Java Spring SDK
-[![Java CI with Gradle](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-publish.yml/badge.svg)](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-publish.yml)
+[![Java CI with Gradle](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-build.yml)
 
 The `PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5.
 
