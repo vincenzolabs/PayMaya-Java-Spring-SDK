@@ -19,12 +19,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Publish package
-        run: ./gradlew signing
-        env:
-          SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
-          SIGNING_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-      - name: Publish package
-        run: ./gradlew uploadArchive
+        run: ./gradlew publish
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+          SIGNING_PASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
