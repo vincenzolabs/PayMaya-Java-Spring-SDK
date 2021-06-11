@@ -13,7 +13,6 @@ group 'org.vincenzolabs'
 def onGitHubWorkflow = System.getenv("GITHUB_RUN_NUMBER") != null
 project.ext.set("buildNumber", onGitHubWorkflow ? System.getenv("GITHUB_REF") : "1.0-SNAPSHOT")
 version = project.ext.buildNumber
-ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = '16'
 
 configurations {
@@ -113,7 +112,6 @@ signing {
     def signingKey = System.getenv("SIGNING_KEY")
     def signingPassword = System.getenv("SIGNING_PASSWORD")
     useInMemoryPgpKeys(signingKey, signingPassword)
-    required { isReleaseVersion && gradle.taskGraph.hasTask("publish")}
     sign publishing.publications.mavenJava
 }
 
