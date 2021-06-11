@@ -10,8 +10,7 @@ logger.quiet "Running Java version: " + System.properties['java.vm.vendor'] + " 
 logger.quiet "Running Gradle version: $gradle.gradleVersion"
 
 group 'org.vincenzolabs'
-def versionNumber = System.getenv('VERSION_NUMBER') == 'unspecified' ? '1.0-SNAPSHOT' : System.getenv('VERSION_NUMBER')
-project.ext.set('buildNumber', versionNumber)
+project.ext.set('buildNumber', System.getenv('VERSION_NUMBER') ?: '1.0-SNAPSHOT')
 version = project.ext.buildNumber
 sourceCompatibility = '16'
 logger.quiet "Building version: $version"
