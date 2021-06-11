@@ -385,7 +385,6 @@ class PayMayaV1ClientIntegrationTest {
                 .containsExactly(true, PaymentStatus.PAYMENT_SUCCESS, BigDecimal.valueOf(100), Currency.PHP, true, true,
                         false, "Charge for paymentgatewayteam@paymaya.com", Collections.emptyMap(), "567834590");
 
-        System.out.println(response);
         assertThat(response.getId()).isNotNull();
         assertThat(response.getApprovalCode()).isNotBlank();
         assertThat(response.getReceiptNumber()).isNotBlank();
