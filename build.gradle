@@ -11,7 +11,7 @@ logger.quiet "Running Gradle version: $gradle.gradleVersion"
 
 group 'org.vincenzolabs'
 def onGitHubWorkflow = System.getenv("GITHUB_RUN_NUMBER") != null
-project.ext.set("buildNumber", onGitHubWorkflow ? System.getenv("GITHUB_REF") : "1.0-SNAPSHOT")
+project.ext.set("buildNumber", onGitHubWorkflow ? System.getenv("VERSION_NUMBER") : "1.0-SNAPSHOT")
 version = project.ext.buildNumber
 sourceCompatibility = '16'
 logger.quiet "Building version: $version"

@@ -22,7 +22,13 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+      env:
+        VERSION_NUMBER: ${{ secrets.VERSION_NUMBER }}
     - name: Run component tests
       run: ./gradlew componentTest
+      env:
+        VERSION_NUMBER: ${{ secrets.VERSION_NUMBER }}
     - name: Run integration tests
       run: ./gradlew integrationTest
+      env:
+        VERSION_NUMBER: ${{ secrets.VERSION_NUMBER }}
