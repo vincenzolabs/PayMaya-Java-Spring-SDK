@@ -47,6 +47,9 @@ public class WalletLinkGETResponse {
 
     private Customer customer;
 
+    /**
+     * The wallet link card.
+     */
     @Data
     @Builder
     @NoArgsConstructor

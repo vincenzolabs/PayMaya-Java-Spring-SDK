@@ -53,30 +53,6 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertjVersion"
 }
 
-/*
-task javadocJar(type: Jar) {
-    archiveClassifier.set('javadoc')
-    from javadoc
-}
-
-task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
-signing {
-    def signingKey = System.getenv("SIGNING_KEY")
-    def signingPassword = System.getenv("SIGNING_PASSWORD")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-    sign configurations.archives
-}
- */
-
 java {
     withJavadocJar()
     withSourcesJar()
@@ -106,26 +82,26 @@ publishing {
                 }
             }
             pom {
-                name 'PayMaya-Java-Spring-SDK'
-                packaging 'jar'
-                description "PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5."
-                url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
+                name = 'PayMaya-Java-Spring-SDK'
+                packaging = 'jar'
+                description = 'PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5.'
+                url = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
                 scm {
-                    connection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
-                    developerConnection 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
-                    url 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
+                    connection = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    developerConnection = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    url = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
                 }
                 licenses {
                     license {
-                        name 'MIT License'
-                        url 'https://opensource.org/licenses/MIT'
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
                     }
                 }
                 developers {
                     developer {
-                        id 'rvbabilonia'
-                        name 'Rey Vincent Babilonia'
-                        email 'rvbabilonia@gmail.com'
+                        id = 'rvbabilonia'
+                        name = 'Rey Vincent Babilonia'
+                        email = 'rvbabilonia@gmail.com'
                     }
                 }
             }

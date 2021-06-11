@@ -49,6 +49,9 @@ public class FundSource {
 
     private Details details;
 
+    /**
+     * The fund source details.
+     */
     @Data
     @Builder
     @NoArgsConstructor

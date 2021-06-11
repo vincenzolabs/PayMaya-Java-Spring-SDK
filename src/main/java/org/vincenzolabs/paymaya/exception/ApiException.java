@@ -34,6 +34,9 @@ import org.springframework.http.HttpStatus;
 @ToString
 public class ApiException extends RuntimeException {
 
+    /**
+     * The {@link ApiError}.
+     */
     private final ApiError apiError;
 
     /**

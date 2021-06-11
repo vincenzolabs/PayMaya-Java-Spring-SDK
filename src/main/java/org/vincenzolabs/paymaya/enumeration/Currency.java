@@ -28,5 +28,8 @@ package org.vincenzolabs.paymaya.enumeration;
  */
 public enum Currency {
 
+    /**
+     * Philippine Peso.
+     */
     PHP
 }

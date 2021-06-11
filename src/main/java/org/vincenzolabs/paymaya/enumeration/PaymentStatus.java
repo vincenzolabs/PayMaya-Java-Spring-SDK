@@ -28,16 +28,52 @@ package org.vincenzolabs.paymaya.enumeration;
  */
 public enum PaymentStatus {
 
+    /**
+     * The token is pending.
+     */
     PENDING_TOKEN,
+    /**
+     * The token is pending payment.
+     */
     PENDING_PAYMENT,
+    /**
+     * The payment has expired.
+     */
     PAYMENT_EXPIRED,
+    /**
+     * The payment is for authentication.
+     */
     FOR_AUTHENTICATION,
+    /**
+     * The payment is being authenticated.
+     */
     AUTHENTICATING,
+    /**
+     * The authentication was successful.
+     */
     AUTH_SUCCESS,
+    /**
+     * The authentication has failed.
+     */
     AUTH_FAILED,
+    /**
+     * The payment is being processed.
+     */
     PAYMENT_PROCESSING,
+    /**
+     * The payment was successful.
+     */
     PAYMENT_SUCCESS,
+    /**
+     * The payment has failed.
+     */
     PAYMENT_FAILED,
+    /**
+     * The payment has been voided.
+     */
     VOIDED,
+    /**
+     * The payment has been refunded.
+     */
     REFUNDED
 }

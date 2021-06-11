@@ -54,6 +54,9 @@ public class PaymentDetails {
     @JsonProperty("3ds")
     private Boolean threeDS;
 
+    /**
+     * The payment details responses.
+     */
     @lombok.Data
     @Builder
     @NoArgsConstructor
@@ -68,6 +71,9 @@ public class PaymentDetails {
 
         private Map<String, Object> metadata;
 
+        /**
+         * The data.
+         */
         @lombok.Data
         @Builder
         @NoArgsConstructor
@@ -78,6 +84,9 @@ public class PaymentDetails {
 
             private EFS efs;
 
+            /**
+             * The electronic financial service.
+             */
             @lombok.Data
             @Builder
             @NoArgsConstructor

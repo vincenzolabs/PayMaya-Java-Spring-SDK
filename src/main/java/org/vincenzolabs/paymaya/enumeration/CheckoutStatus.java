@@ -28,6 +28,12 @@ package org.vincenzolabs.paymaya.enumeration;
  */
 public enum CheckoutStatus {
 
+    /**
+     * Checkout has been created.
+     */
     CREATED,
+    /**
+     * Checkout has been completed.
+     */
     COMPLETED
 }

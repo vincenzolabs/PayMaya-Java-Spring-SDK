@@ -87,6 +87,9 @@ public class PaymentResponse {
 
     private Receipt receipt;
 
+    /**
+     * The payment response receipt.
+     */
     @Data
     @Builder
     @NoArgsConstructor

@@ -28,10 +28,28 @@ package org.vincenzolabs.paymaya.enumeration;
  */
 public enum WebhookName {
 
+    /**
+     * The webhook for successful checkout.
+     */
     CHECKOUT_SUCCESS,
+    /**
+     * The webhook for failed checkout.
+     */
     CHECKOUT_FAILURE,
+    /**
+     * The webhook for dropped out checkout.
+     */
     CHECKOUT_DROPOUT,
+    /**
+     * The webhook for successful payment.
+     */
     PAYMENT_SUCCESS,
+    /**
+     * The webhook for failed payment.
+     */
     PAYMENT_FAILED,
+    /**
+     * The webhook for expired payment.
+     */
     PAYMENT_EXPIRED
 }

@@ -76,6 +76,9 @@ public class Customer {
 
     private String ipAddress;
 
+    /**
+     * The contact details.
+     */
     @Data
     @Builder
     @NoArgsConstructor
@@ -89,6 +92,9 @@ public class Customer {
         private String email;
     }
 
+    /**
+     * The address.
+     */
     @Data
     @Builder
     @NoArgsConstructor
@@ -110,6 +116,9 @@ public class Customer {
         private String countryCode;
     }
 
+    /**
+     * The shipping address.
+     */
     @Data
     @Builder
     @NoArgsConstructor

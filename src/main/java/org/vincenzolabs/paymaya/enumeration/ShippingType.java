@@ -28,6 +28,12 @@ package org.vincenzolabs.paymaya.enumeration;
  */
 public enum ShippingType {
 
+    /**
+     * Standard shipping.
+     */
     ST,
+    /**
+     * Same-day shipping.
+     */
     SD
 }

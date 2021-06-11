@@ -52,6 +52,9 @@ public class Amount {
 
     private Details details;
 
+    /**
+     * The amount details.
+     */
     @Data
     @Builder
     @NoArgsConstructor

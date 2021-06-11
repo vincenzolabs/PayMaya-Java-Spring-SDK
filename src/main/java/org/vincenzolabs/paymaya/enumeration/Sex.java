@@ -30,14 +30,25 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  */
 public enum Sex {
 
+    /**
+     * Male.
+     */
     M,
+    /**
+     * Female.
+     */
     F;
 
+    /**
+     * Returns the {@link Sex} matching the given value. Otherwise, null is returned.
+     * @param value the value
+     * @return the {@link Sex}
+     */
     @JsonCreator
-    public static Sex forName(String name) {
-        for(Sex c: values()) {
-            if(c.name().equals(name)) {
-                return c;
+    public static Sex forName(String value) {
+        for(Sex sex: values()) {
+            if(sex.name().equals(value)) {
+                return sex;
             }
         }
 
