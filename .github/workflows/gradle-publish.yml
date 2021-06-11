@@ -21,7 +21,7 @@ jobs:
       - name: Publish package
         run: ./gradlew publish
         env:
-          VERSION_NUMBER: ${{ secrets.VERSION_NUMBER }}
+          VERSION_NUMBER: ${{ github.event.release.tag_name }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_SECRETKEY }}
