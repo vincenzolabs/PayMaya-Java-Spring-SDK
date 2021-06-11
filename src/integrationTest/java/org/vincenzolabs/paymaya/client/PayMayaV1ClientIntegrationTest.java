@@ -659,7 +659,7 @@ class PayMayaV1ClientIntegrationTest {
     @DisplayName("Verify that checkout webhook is created")
     @Order(11)
     void createCheckoutWebhook() {
-        ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
+        ReflectionTestUtils.setField(client, "secretKey", "sk-VGDKY3P90NYZZ0kSWqBFaD1NTIXQCxtdS7SbQXvcA4g");
 
         WebhookRequest request = WebhookRequest.builder()
                 .name(WebhookName.CHECKOUT_DROPOUT)
@@ -684,7 +684,7 @@ class PayMayaV1ClientIntegrationTest {
     @DisplayName("Verify that checkout webhooks are retrieved")
     @Order(12)
     void retrieveCheckoutWebhooks() {
-        ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
+        ReflectionTestUtils.setField(client, "secretKey", "sk-VGDKY3P90NYZZ0kSWqBFaD1NTIXQCxtdS7SbQXvcA4g");
 
         List<WebhookResponse> responses = client.retrieveCheckoutWebhooks().collectList().block();
 
@@ -700,7 +700,7 @@ class PayMayaV1ClientIntegrationTest {
     @DisplayName("Verify that checkout webhook is updated")
     @Order(13)
     void updateCheckoutWebhook() {
-        ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
+        ReflectionTestUtils.setField(client, "secretKey", "sk-VGDKY3P90NYZZ0kSWqBFaD1NTIXQCxtdS7SbQXvcA4g");
 
         WebhookRequest request = WebhookRequest.builder()
                 .name(WebhookName.CHECKOUT_DROPOUT)
@@ -720,7 +720,7 @@ class PayMayaV1ClientIntegrationTest {
     @DisplayName("Verify that checkout webhook is deleted")
     @Order(14)
     void deleteCheckoutWebhook() {
-        ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
+        ReflectionTestUtils.setField(client, "secretKey", "sk-VGDKY3P90NYZZ0kSWqBFaD1NTIXQCxtdS7SbQXvcA4g");
 
         WebhookResponse response = client.deleteCheckoutWebhook(webhookId.toString()).block();
 
@@ -766,10 +766,10 @@ class PayMayaV1ClientIntegrationTest {
 
         assertThat(responses)
                 .isNotNull()
-                .hasSize(3)
+                .hasSizeGreaterThanOrEqualTo(4)
                 .extracting("name")
                 .containsExactlyInAnyOrder(WebhookName.CHECKOUT_SUCCESS, WebhookName.CHECKOUT_FAILURE,
-                        WebhookName.PAYMENT_EXPIRED);
+                        WebhookName.PAYMENT_EXPIRED, WebhookName.CHECKOUT_DROPOUT);
     }
 
     @Test
