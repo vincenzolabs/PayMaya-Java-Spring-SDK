@@ -1,6 +1,7 @@
 plugins {
     id 'com.github.ben-manes.versions' version '0.39.0'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'java-library'
     id 'maven-publish'
     id 'signing'
@@ -68,7 +69,8 @@ publishing {
         }
     }
     publications {
-        mavenJava(MavenPublication) {
+        mavenJava(MavenPublication) { publication ->
+            project.shadow.component(publication)
             from components.java
             groupId 'org.vincenzolabs'
             artifactId 'paymaya-java-spring-sdk'
