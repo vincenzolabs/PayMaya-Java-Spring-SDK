@@ -73,7 +73,7 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             groupId 'org.vincenzolabs'
-            artifactId 'paymaya-java-spring-sdk'
+            artifactId 'maya-java-spring-sdk'
             versionMapping {
                 usage('java-api') {
                     fromResolutionOf('runtimeClasspath')
