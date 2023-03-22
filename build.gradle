@@ -1,7 +1,6 @@
 plugins {
-    id 'com.github.ben-manes.versions' version '0.39.0'
-    id 'org.unbroken-dome.test-sets' version '4.0.0'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.ben-manes.versions' version '0.46.0'
+    id 'jvm-test-suite'
     id 'java-library'
     id 'maven-publish'
     id 'signing'
@@ -13,7 +12,7 @@ logger.quiet "Running Gradle version: $gradle.gradleVersion"
 group 'org.vincenzolabs'
 project.ext.set('buildNumber', System.getenv('VERSION_NUMBER') ?: '1.0-SNAPSHOT')
 version = project.ext.buildNumber
-sourceCompatibility = '16'
+sourceCompatibility = '17'
 logger.quiet "Building version: $version"
 
 configurations {
@@ -22,26 +21,28 @@ configurations {
     }
 }
 
-testSets {
-    componentTest
-    integrationTest
-}
-
 repositories {
     mavenCentral()
 }
 
 ext {
-    springBootVersion = '2.5.0'
-    lombokVersion = '1.18.20'
+    springBootVersion = '3.0.4'
+    springVersion = '6.0.7'
+    lombokVersion = '1.18.26'
+    jacksonVersion = '2.14.2'
 
-    reactorTestVersion = '3.4.6'
-    junitVersion = '5.7.2'
-    assertjVersion = '3.19.0'
+    reactorTestVersion = '3.5.4'
+    junitVersion = '5.9.2'
+    assertjVersion = '3.24.2'
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-webflux:$springBootVersion"
+    implementation "org.springframework:spring-web:$springVersion"
+    implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion"
 
     compileOnly "org.projectlombok:lombok:$lombokVersion"
 
@@ -56,11 +57,6 @@ dependencies {
 java {
     withJavadocJar()
     withSourcesJar()
-}
-
-shadowJar {
-    baseName = 'paymaya-java-spring-sdk'
-    classifier = ''
 }
 
 publishing {
@@ -87,14 +83,14 @@ publishing {
                 }
             }
             pom {
-                name = 'PayMaya-Java-Spring-SDK'
+                name = 'Maya-Java-Spring-SDK'
                 packaging = 'jar'
-                description = 'PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5.'
+                description = 'Maya-Java-Spring-SDK is a client library written in Java 17 and Spring Boot 3 for invoking Maya (formerly PayMaya) payment services.'
                 url = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
                 scm {
-                    connection = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
-                    developerConnection = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
-                    url = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK'
+                    connection = 'scm:git:git://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    developerConnection = 'scm:git:ssh://github.com/vincenzolabs/PayMaya-Java-Spring-SDK.git'
+                    url = 'https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/tree/master'
                 }
                 licenses {
                     license {
@@ -122,35 +118,44 @@ signing {
 }
 
 javadoc {
-    if(JavaVersion.current().isJava9Compatible()) {
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
 }
 
-dependencyUpdates {
-    revision = 'release'
-    gradleReleaseChannel = 'current'
-    resolutionStrategy {
-        componentSelection { rules ->
-            rules.all { ComponentSelection selection ->
-                def version = selection.candidate.version.toLowerCase()
-                if (version.contains('alpha') || version.contains('beta')
-                        || version.contains('snapshot') || version.contains('rc')
-                        || version ==~ '[0-9]+\\.[0-9]+\\.[0-9]+(?:-b|.m|-M)[0-9]+(\\.)?[0-9]*') {
-                    selection.reject('Not a release')
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+            dependencies {
+                implementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+                implementation "io.projectreactor:reactor-test:$reactorTestVersion"
+                implementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+                implementation "org.assertj:assertj-core:$assertjVersion"
+            }
+        }
+        integrationTest(JvmTestSuite) {
+            sources.java.srcDirs = ['src/integrationTest/java']
+            sources.resources.srcDirs = ['src/integrationTest/resources']
+            dependencies {
+                implementation project()
+                implementation sourceSets.test.output
+            }
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
                 }
             }
         }
     }
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
 }
 
 wrapper {
-    gradleVersion = '7.0.2'
+    gradleVersion = '8.0.2'
 }
