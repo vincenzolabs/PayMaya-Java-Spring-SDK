@@ -36,7 +36,7 @@ implementation "org.vincenzolabs:maya-java-spring-sdk:$mayaVersion"
 ### Configuration
 - In your `application-test.yaml`, set the following properties:
 ```yaml
-paymaya:
+maya:
   key:
     public: pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5
     secret: sk-NMda607FeZNGRt9xCdsIRiZ4Lqu6LT898ItHbN4qPSe

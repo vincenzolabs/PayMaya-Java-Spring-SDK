@@ -59,7 +59,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
- * The PayMaya v1 client.
+ * The Maya v1 client.
  *
  * @author <a href="mailto:rvbabilonia@gmail.com">Rey Vincent Babilonia</a>
  */
@@ -83,13 +83,13 @@ public class MayaV1Client {
 
     private static final String RECURRING_PAYMENT_PATH = "/payby/v2/paymaya/link";
 
-    @Value("${paymaya.key.public:pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5}")
+    @Value("${maya.key.public:pk-MOfNKu3FmHMVHtjyjG7vhr7vFevRkWxmxYL1Yq6iFk5}")
     private String publicKey;
 
-    @Value("${paymaya.key.secret:sk-NMda607FeZNGRt9xCdsIRiZ4Lqu6LT898ItHbN4qPSe}")
+    @Value("${maya.key.secret:sk-NMda607FeZNGRt9xCdsIRiZ4Lqu6LT898ItHbN4qPSe}")
     private String secretKey;
 
-    @Value("${paymaya.payment.gateway.url:https://pg-sandbox.paymaya.com}")
+    @Value("${maya.payment.gateway.url:https://pg-sandbox.paymaya.com}")
     private String paymentGatewayUrl;
 
     @Value("${spring.profiles.active:}")
@@ -134,7 +134,7 @@ public class MayaV1Client {
     }
 
     /**
-     * Creates a single payment transaction using a PayMaya account. This requires the public key as username.
+     * Creates a single payment transaction using a Maya account. This requires the public key as username.
      *
      * @param request the {@link CheckoutRequest}
      * @return the {@link CheckoutPOSTResponse} {@link Mono}
@@ -191,7 +191,7 @@ public class MayaV1Client {
     }
 
     /**
-     * Creates a wallet link that allows charging to a PayMaya account. This requires the secret key as username.
+     * Creates a wallet link that allows charging to a Maya account. This requires the secret key as username.
      *
      * @param request the {@link PaymentRequest}
      * @return the {@link WalletLinkPOSTResponse} {@link Mono}
@@ -250,7 +250,7 @@ public class MayaV1Client {
     }
 
     /**
-     * Deactivates a PayMaya wallet link. This requires the secret key as username.
+     * Deactivates a Maya wallet link. This requires the secret key as username.
      *
      * @param linkId the wallet link ID
      * @return the {@link WalletLinkGETResponse} {@link Mono}

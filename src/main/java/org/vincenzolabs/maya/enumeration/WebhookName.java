@@ -71,16 +71,22 @@ public enum WebhookName {
     RECURRING_PAYMENT_FAILURE("RECURRING_PAYMENT_FAILURE"),
     /**
      * The webhook for successful checkout.
+     *
+     * @deprecated replaced by {@link #PAYMENT_SUCCESS}
      */
     @Deprecated(forRemoval = true)
     CHECKOUT_SUCCESS("CHECKOUT_SUCCESS"),
     /**
      * The webhook for failed checkout.
+     *
+     * @deprecated replaced by {@link #PAYMENT_FAILED}
      */
     @Deprecated(forRemoval = true)
     CHECKOUT_FAILURE("CHECKOUT_FAILURE"),
     /**
      * The webhook for dropped out checkout.
+     *
+     * @deprecated replaced by {@link #PAYMENT_EXPIRED}
      */
     @Deprecated(forRemoval = true)
     CHECKOUT_DROPOUT("CHECKOUT_DROPOUT");
@@ -113,6 +119,7 @@ public enum WebhookName {
 
     /**
      * Returns the {@link WebhookName} matching the given name.
+     *
      * @param name the name
      * @return the {@link WebhookName}
      */
