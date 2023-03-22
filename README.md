@@ -1,10 +1,10 @@
-# PayMaya Java Spring SDK
+# Maya Java Spring SDK
 [![Java CI with Gradle](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/vincenzolabs/PayMaya-Java-Spring-SDK/actions/workflows/gradle-build.yml)
 
-The `PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring Boot 2.5.
+The `Maya-Java-Spring-SDK` is a client library written in Java 17 and Spring Boot 3 for invoking Maya (formerly PayMaya) payment services.
 
 ## Development Environment
-- Install Amazon Corretto 16 or newer from https://aws.amazon.com/corretto/.
+- Install Amazon Corretto 17 or newer from https://aws.amazon.com/corretto/.
 - Install IDE with Gradle plugin.
 
 ### Compilation and Unit Testing
@@ -20,7 +20,7 @@ The `PayMaya-Java-Spring-SDK` is a client library written in Java 16 and Spring 
 ### Gradle
 - In your `build.gradle`, add the dependency:
 ```groovy
-implementation "org.vincenzolabs:paymaya-java-spring-sdk:$paymayaVersion"
+implementation "org.vincenzolabs:maya-java-spring-sdk:$mayaVersion"
 ```
 
 ### Maven
@@ -28,8 +28,8 @@ implementation "org.vincenzolabs:paymaya-java-spring-sdk:$paymayaVersion"
 ```xml
 <dependency>
     <groupId>org.vincenzolabs</groupId>
-    <artifactId>paymaya-java-spring-sdk</artifactId>
-    <version>${paymaya.version}</version>
+    <artifactId>maya-java-spring-sdk</artifactId>
+    <version>${maya.version}</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@ paymaya:
 - In your `application.yaml`, specify your production keys and point the payment gateway URL to `https://pg.paymaya.com`.
 
 ### Client
-- In your client code, inject `PayMayaV1Client`.
+- In your client code, inject `MayaV1Client`.
 - To let your customer pay using their PayMaya wallet:
 ```java
 PaymentRequest request = PaymentRequest.builder()
