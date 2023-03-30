@@ -732,7 +732,7 @@ class MayaV1ClientIntegrationTest {
 
     @Test
     @DisplayName("Verify that payment webhook is created")
-    @Order(15)
+    @Order(16)
     void createPaymentWebhook() {
         ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
 
@@ -757,7 +757,7 @@ class MayaV1ClientIntegrationTest {
 
     @Test
     @DisplayName("Verify that payment webhooks are retrieved")
-    @Order(16)
+    @Order(15)
     void retrievePaymentWebhooks() {
         ReflectionTestUtils.setField(client, "secretKey", "sk-fzukI3GXrzNIUyvXY3n16cji8VTJITfzylz5o5QzZMC");
 
@@ -766,6 +766,11 @@ class MayaV1ClientIntegrationTest {
         assertThat(responses)
                 .isNotNull()
                 .isNotEmpty();
+
+        responses.stream()
+                .filter(webhookResponse -> WebhookName.PAYMENT_EXPIRED == webhookResponse.getName())
+                .map(webhookResponse -> webhookResponse.getId().toString())
+                .forEach(id -> client.deletePaymentWebhook(id).block());
     }
 
     @Test

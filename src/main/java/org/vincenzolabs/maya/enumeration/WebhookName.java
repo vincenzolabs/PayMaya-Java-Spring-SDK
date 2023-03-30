@@ -70,6 +70,10 @@ public enum WebhookName {
      */
     RECURRING_PAYMENT_FAILURE("RECURRING_PAYMENT_FAILURE"),
     /**
+     * The webhook for authorized consent.
+     */
+    AUTHORIZED("AUTHORIZED"),
+    /**
      * The webhook for successful checkout.
      *
      * @deprecated replaced by {@link #PAYMENT_SUCCESS}
